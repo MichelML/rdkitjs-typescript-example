@@ -1,6 +1,6 @@
 # RDKit.js - Create React App with TypeScript template
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A create react app leveraging typescript types of rdkit-js  
 
 ## Available Scripts
 
