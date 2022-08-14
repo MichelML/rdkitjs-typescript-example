@@ -1,12 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import type { RDKitModule } from "@rdkit/rdkit";
+import React, { useState, useEffect } from "react";
+import "./App.css";
+
+declare global {
+  interface Window {
+    RDKit: RDKitModule;
+  }
+}
 
 function App() {
+  const [rdkitLoaded, setRdkitLoaded] = useState(false);
+
+  useEffect(() => {
+    window.initRDKitModule().then((rdkit) => {
+      window.RDKit = rdkit;
+      setRdkitLoaded(true);
+    });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        {rdkitLoaded ? (
+          <span
+            dangerouslySetInnerHTML={{
+              __html: window.RDKit.get_mol("c1ccccc1").get_svg(),
+            }}
+          />
+        ) : (
+          "Loading..."
+        )}
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
